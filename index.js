@@ -23,6 +23,8 @@ mongoose.connect(
   }
 )
 
+app.use(express.static(`${__dirname}/dist`))
+
 // ! Parses/Compiles incoming request packages into request body object
 app.use(bodyParser.json())
 
@@ -31,6 +33,8 @@ app.use(logger)
 
 // ! Routing to different functions depending on request end point and verb
 app.use('/api', router)
+
+app.use('/*', (req, res) => res.sendFile(`${__dirname}/dist/index.html`))
 
 // ! Tell the server to start listening for requests
 app.listen(port, () => `Server is running and listening to requests on port ${port}`)
